@@ -59,6 +59,18 @@ return {
 			-- ['<C-Space>'] = cmp.mapping.complete(),
 		})
 
+		-- Disables in line error messages and instead puts an error sign to indicate error and an underline
+		local function setup_diags()
+			vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+				vim.lsp.diagnostic.on_publish_diagnostics,
+				{
+					virtual_text = false,
+					signs = true,
+					update_in_insert = false,
+					underline = true,
+				}
+			)
+		end
 		-- cmp_mappings['<Tab>'] = nil
 		-- cmp_mappings['<S-Tab>'] = nil
 
@@ -90,6 +102,26 @@ return {
 			vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
 			vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 			vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+
+			-- Automatically show diagnostic popups on CursorHold
+			vim.api.nvim_create_autocmd("CursorHold", {
+				buffer = bufnr,
+				callback = function()
+					vim.diagnostic.open_float(nil, { focusable = false, scope = "cursor" })
+				end,
+			})
+			-- Keybinding to open diagnostics and copy error text
+			vim.keymap.set("n", "<leader>vc", function()
+				local float_buf, win_id = vim.diagnostic.open_float(nil, { focusable = true, scope = "cursor" })
+
+				if float_buf then
+					-- Select all text and copy it
+					vim.api.nvim_win_call(win_id, function()
+						vim.cmd("normal! ggVGy") -- Select all and yank
+					end)
+					print("Diagnostic copied to clipboard!")
+				end
+			end, opts)
 		end)
 
 		lsp.format_on_save({
@@ -103,6 +135,7 @@ return {
 		})
 
 		lsp.setup()
+		setup_diags()
 
 		vim.diagnostic.config({
 			virtual_text = true
