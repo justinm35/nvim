@@ -1,4 +1,3 @@
-
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
@@ -37,10 +36,10 @@ vim.keymap.set("n", "<space>fb", ":Telescope file_browser path=%:p:h select_buff
 vim.keymap.set('n', '<leader>ut', vim.cmd.UndotreeToggle)
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { noremap = true, silent = true, buffer = bufnr })
 
+
 -----------------------------------
 ---------- Neogit ----------
 -----------------------------------
-
 vim.keymap.set("n", "<leader>gg", function()
   require("neogit").open({ kind = "floating" })
 end, { noremap = true, silent = true, desc = "Open Neogit popup" })
@@ -49,7 +48,6 @@ end, { noremap = true, silent = true, desc = "Open Neogit popup" })
 -----------------------------------
 ---------- Git Diff View ----------
 -----------------------------------
-
 -- vim.keymap.set("n", "gd", function()
 --   vim.cmd("DiffviewOpen")
 -- end, { noremap = true, silent = true, desc = "Open Diffview" })
@@ -66,9 +64,9 @@ end, { noremap = true, silent = true, desc = "Quit Diffview" })
 ---
 -- Map Cmd+Shift+, to copy the relative path of the current file
 vim.keymap.set("n", "<D-S-,>", function()
-	local relative_path = vim.fn.expand("%")
-	vim.fn.setreg("+", relative_path)
-	print("Relative path copied: " .. relative_path)
+  local relative_path = vim.fn.expand("%")
+  vim.fn.setreg("+", relative_path)
+  print("Relative path copied: " .. relative_path)
 end, { noremap = true, silent = true })
 
 
@@ -78,5 +76,12 @@ vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
+-- Preview Git hunk inline (gitsigns)
+vim.keymap.set("n", "<leader>hp", function()
+  require("gitsigns").preview_hunk_inline()
+end, { noremap = true, silent = true, desc = "Preview Git hunk inline" })
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>ii', ':AiderOpen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>da', ':AiderAddModifiedFiles<CR>', { noremap = true, silent = true })

@@ -16,7 +16,7 @@ vim.opt.mouse = "a"
 vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
 vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
+  vim.opt.clipboard = "unnamedplus"
 end)
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -41,6 +41,8 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 vim.opt.list = true
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+-- Set diff fill character
+vim.opt.fillchars:append { diff = "╱" }
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
 -- Show which line your cursor is on
@@ -49,3 +51,12 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 vim.opt.expandtab = true
+
+-- Highlight when yanking (copying) text
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
