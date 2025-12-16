@@ -1,5 +1,3 @@
--- Set <space> as the leader key
-vim.opt.laststatus = 3
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
@@ -51,6 +49,9 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 vim.opt.expandtab = true
+
+vim.incsearch = true
+vim.scrolloff = 8
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {

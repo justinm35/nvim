@@ -25,10 +25,11 @@ return {
         map("n", "gr", vim.lsp.buf.references)
         map("n", "K", vim.lsp.buf.hover)
       end
+
       mason_lspconfig.setup({
         ensure_installed = {
           "eslint",
-          "tsserver",
+          "vtsls",
           "pyright",
           "lua_ls",
         },

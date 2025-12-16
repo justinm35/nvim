@@ -1,12 +1,12 @@
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
+  dependencies = { "nvim-tree/nvim-web-devicons", "rose-pine/neovim", opt = true },
   lazy = false,
   config = function()
     require("lualine").setup({
       options = {
         icons_enabled = false,
-        theme = "auto",
+        theme = rp,
         section_separators = "",
         component_separators = "",
         disabled_filetypes = {
@@ -45,4 +45,3 @@ return {
     })
   end,
 }
-
